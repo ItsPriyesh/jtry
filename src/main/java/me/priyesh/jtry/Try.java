@@ -20,11 +20,11 @@ public abstract class Try<A> {
 
   /**
    * Returns the value from this Try if it's a Success, or throws the exception if it's a Failure.
-   *
+   * <p>
    * Note that if the Failure encapsulates a checked exception, it will be given wrapped in a RuntimeException.
    * This allows unchecked calls to get().
    */
-  public abstract <T extends RuntimeException> A get() throws T;
+  public abstract <E extends RuntimeException> A get() throws E;
 
   /**
    * Returns this Try if it's a Success or the given default value if it's a Failure.
@@ -62,6 +62,14 @@ public abstract class Try<A> {
       return new Success<>(f.apply());
     } catch (Throwable throwable) {
       return new Failure<>(throwable);
+    }
+  }
+
+  public void match(Action<A> onSuccess, Action<Exception> onFailure) {
+    if (this instanceof Success) {
+      onSuccess.call(get());
+    } else if (this instanceof Failure) {
+      try { get(); } catch (Exception e) { onFailure.call(e); }
     }
   }
 }
