@@ -65,11 +65,13 @@ public abstract class Try<A> {
     }
   }
 
-  public void match(Action<A> onSuccess, Action<Exception> onFailure) {
+  public void match(Action<A> onSuccess, Action<RuntimeException> onFailure) {
     if (this instanceof Success) {
       onSuccess.call(get());
     } else if (this instanceof Failure) {
-      try { get(); } catch (Exception e) { onFailure.call(e); }
+      try { get(); } catch (Exception e) {
+        onFailure.call((RuntimeException) e);
+      }
     }
   }
 }

@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import static me.priyesh.jtry.TestUtils.assertThrows;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -31,10 +32,7 @@ public class TryTest {
     RuntimeException ex = new RuntimeException();
     Try<Integer> t = Try.of(() -> { throw ex; });
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
   }
 
   @Test
@@ -46,10 +44,7 @@ public class TryTest {
   public void testGet_Failure() {
     RuntimeException ex = new RuntimeException();
     Try<Integer> t = new Failure<>(ex);
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
   }
 
   @Test
@@ -88,10 +83,7 @@ public class TryTest {
     RuntimeException ex = new RuntimeException();
     Try<String> t = new Failure<>(ex).map(String::valueOf);
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
   }
 
   @Test
@@ -107,10 +99,7 @@ public class TryTest {
     RuntimeException second = new RuntimeException();
     Try<Integer> t = new Failure<>(first).map(i -> { throw second; });
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(first, e); }
+    assertThrows(first, t::get);
   }
 
   @Test
@@ -118,10 +107,7 @@ public class TryTest {
     RuntimeException ex = new RuntimeException();
     Try<Integer> t = new Success<>(1).map(i -> { throw ex; });
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
   }
 
   @Test
@@ -129,10 +115,7 @@ public class TryTest {
     RuntimeException ex = new RuntimeException();
     Try<Integer> t = new Failure<Integer>(ex).flatMap(i -> new Success<>(i + 1));
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
   }
 
   @Test
@@ -142,15 +125,13 @@ public class TryTest {
     assertEquals(new Integer(2), t.get());
   }
 
+
   @Test
   public void testFlatMap_Exception_Failure() {
     RuntimeException ex = new RuntimeException();
     Try<Integer> t = new Failure<>(ex).flatMap(i -> { throw ex; });
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
   }
 
   @Test
@@ -158,9 +139,17 @@ public class TryTest {
     RuntimeException ex = new RuntimeException();
     Try<Integer> t = new Success<>(1).flatMap(i -> { throw ex; });
     assertThat(t, instanceOf(Failure.class));
-    try {
-      t.get();
-      fail();
-    } catch (Exception e) { assertEquals(ex, e); }
+    assertThrows(ex, t::get);
+  }
+
+  @Test
+  public void testMatch_Failure() {
+    RuntimeException ex = new RuntimeException();
+    new Failure<Integer>(ex).match(i -> fail(), e -> assertEquals(ex, e));
+  }
+
+  @Test
+  public void testMatch_Success() {
+    new Success<>(1).match(i -> assertEquals(new Integer(1), i), e -> fail());
   }
 }
