@@ -3,7 +3,7 @@ sudo: false
 
 jdk:
   - oraclejdk8
-  - oraclejde
+  - oraclejdk7
 
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
