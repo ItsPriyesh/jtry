@@ -1,5 +1,15 @@
 language: java
+sudo: false
 
 jdk:
   - oraclejdk8
-  - oraclejdk7
+  - oraclejde
+
+before_install:
+  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
+  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+  - export JAVA_HOME=$JAVA7_HOME
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+

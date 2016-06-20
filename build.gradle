@@ -9,6 +9,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'me.tatarka.retrolambda'
 
 group 'me.priyesh'
@@ -30,4 +31,10 @@ retrolambda {
     jvmArgs '-noverify'
     defaultMethods false
     incremental true
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
 }
