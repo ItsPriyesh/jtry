@@ -1,16 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-    }
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'me.tatarka.retrolambda' version '3.2.5'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
 }
-
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'me.tatarka.retrolambda'
 
 group 'me.priyesh'
 version '1.0-SNAPSHOT'
@@ -25,8 +18,8 @@ dependencies {
 }
 
 retrolambda {
-    jdk System.getenv("JAVA8_HOME")
-    oldJdk System.getenv("JAVA7_HOME")
+    jdk System.getenv('JAVA8_HOME')
+    oldJdk System.getenv('JAVA7_HOME')
     javaVersion JavaVersion.VERSION_1_7
     jvmArgs '-noverify'
     defaultMethods false
@@ -35,6 +28,7 @@ retrolambda {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
+        xml.enabled = true
+        html.enabled = true
     }
 }
