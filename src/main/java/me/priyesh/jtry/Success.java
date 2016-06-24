@@ -34,6 +34,10 @@ public final class Success<A> extends Try<A> {
     return get();
   }
 
+  public Try<A> orElse(Try<A> defaultValue) {
+    return this;
+  }
+
   public final A get() {
     return value;
   }

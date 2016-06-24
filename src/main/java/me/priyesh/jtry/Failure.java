@@ -37,6 +37,10 @@ public final class Failure<A> extends Try<A> {
     return defaultValue;
   }
 
+  public Try<A> orElse(Try<A> defaultValue) {
+    return defaultValue;
+  }
+
   public final A get() throws RuntimeException {
     throw throwable instanceof RuntimeException
         ? (RuntimeException) throwable

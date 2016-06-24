@@ -20,7 +20,7 @@ public abstract class Try<A> {
 
   /**
    * Returns the value from this Try if it's a Success, or throws the exception if it's a Failure.
-   * <p>
+   *
    * Note that if the Failure encapsulates a checked exception, it will be given wrapped in a RuntimeException.
    * This allows unchecked calls to get().
    */
@@ -30,6 +30,12 @@ public abstract class Try<A> {
    * Returns this Try if it's a Success or the given default value if it's a Failure.
    */
   public abstract A getOrElse(A defaultValue);
+
+  /**
+   * Returns this Try if it's a Success or the given default value if this is a `Failure`.
+   */
+  //def orElse[U >: T](default: => Try[U]): Try[U]
+  public abstract Try<A> orElse(Try<A> defaultValue);
 
   /**
    * Returns the given function applied to the value from this Success or returns this if this is a Failure.
