@@ -5,6 +5,11 @@ plugins {
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
+allprojects {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 group 'me.priyesh'
 version '1.0-SNAPSHOT'
 
