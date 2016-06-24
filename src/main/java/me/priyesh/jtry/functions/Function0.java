@@ -16,9 +16,6 @@
 
 package me.priyesh.jtry.functions;
 
-/**
- * An unsafe function of
- */
 public interface Function0<R> {
   R apply() throws Throwable;
 }
