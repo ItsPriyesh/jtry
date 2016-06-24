@@ -55,7 +55,7 @@ public class TryTest {
   @Test
   public void testGetOrElse_Failure() {
     Try<Integer> t = new Failure<>(new Exception());
-    assertEquals(new Integer(1), t.getOrElse(1));
+    assertEquals(new Integer(1), t.getOrElse(() -> 1));
   }
 
   @Test

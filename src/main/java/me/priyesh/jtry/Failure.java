@@ -16,6 +16,9 @@
 
 package me.priyesh.jtry;
 
+import me.priyesh.jtry.functions.Function1;
+import me.priyesh.jtry.functions.Supplier;
+
 public final class Failure<A> extends Try<A> {
 
   private final Throwable throwable;
@@ -33,12 +36,12 @@ public final class Failure<A> extends Try<A> {
     return false;
   }
 
-  public final A getOrElse(A defaultValue) {
-    return defaultValue;
+  public final A getOrElse(Supplier<A> defaultValue) {
+    return defaultValue.get();
   }
 
-  public Try<A> orElse(Try<A> defaultValue) {
-    return defaultValue;
+  public Try<A> orElse(Supplier<Try<A>> defaultValue) {
+    return defaultValue.get();
   }
 
   public final A get() throws RuntimeException {

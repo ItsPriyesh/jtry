@@ -14,19 +14,8 @@
  * limitations under the License.
  */
 
-package me.priyesh.jtry;
+package me.priyesh.jtry.functions;
 
-import me.priyesh.jtry.functions.Function0;
-
-import static org.junit.Assert.assertEquals;
-
-public class TestUtils {
-  static void assertThrows(RuntimeException expected, Function0 action) {
-    try {
-      action.apply();
-      throw new AssertionError("Function completed without throwing expected exception");
-    } catch (Throwable t) {
-      assertEquals(expected, t);
-    }
-  }
+public interface Supplier<T> {
+  T get();
 }

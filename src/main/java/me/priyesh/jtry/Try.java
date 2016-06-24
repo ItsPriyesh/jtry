@@ -16,6 +16,10 @@
 
 package me.priyesh.jtry;
 
+import me.priyesh.jtry.functions.Function0;
+import me.priyesh.jtry.functions.Function1;
+import me.priyesh.jtry.functions.Supplier;
+
 public abstract class Try<A> {
 
   /**
@@ -29,13 +33,13 @@ public abstract class Try<A> {
   /**
    * Returns this Try if it's a Success or the given default value if it's a Failure.
    */
-  public abstract A getOrElse(A defaultValue);
+  public abstract A getOrElse(Supplier<A> defaultValue);
 
   /**
    * Returns this Try if it's a Success or the given default value if this is a `Failure`.
    */
   //def orElse[U >: T](default: => Try[U]): Try[U]
-  public abstract Try<A> orElse(Try<A> defaultValue);
+  public abstract Try<A> orElse(Supplier<Try<A>> defaultValue);
 
   /**
    * Returns the given function applied to the value from this Success or returns this if this is a Failure.

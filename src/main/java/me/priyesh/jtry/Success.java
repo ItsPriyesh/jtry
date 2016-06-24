@@ -16,6 +16,9 @@
 
 package me.priyesh.jtry;
 
+import me.priyesh.jtry.functions.Function1;
+import me.priyesh.jtry.functions.Supplier;
+
 public final class Success<A> extends Try<A> {
 
   Success(A a) {
@@ -30,11 +33,11 @@ public final class Success<A> extends Try<A> {
     return true;
   }
 
-  public final A getOrElse(A defaultValue) {
+  public final A getOrElse(Supplier<A> defaultValue) {
     return get();
   }
 
-  public Try<A> orElse(Try<A> defaultValue) {
+  public Try<A> orElse(Supplier<Try<A>> defaultValue) {
     return this;
   }
 

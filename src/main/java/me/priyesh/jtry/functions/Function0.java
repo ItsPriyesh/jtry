@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package me.priyesh.jtry;
+package me.priyesh.jtry.functions;
 
-public interface Function1<T, R> {
-  R apply(T t) throws Throwable;
+/**
+ * An unsafe function of
+ */
+public interface Function0<R> {
+  R apply() throws Throwable;
 }
