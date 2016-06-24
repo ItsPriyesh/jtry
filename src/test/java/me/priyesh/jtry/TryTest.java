@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static me.priyesh.jtry.TestUtils.assertThrows;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
@@ -62,6 +62,19 @@ public class TryTest {
   public void testGetOrElse_Success() {
     Try<Integer> t = new Success<>(1);
     assertEquals(new Integer(1), t.getOrElse(null));
+  }
+
+  @Test
+  public void testOrElse_Failure() {
+    Try<Integer> t = new Failure<>(new Exception());
+    Try<Integer> def = Try.of(() -> 1);
+    assertEquals(def, t.orElse(() -> def));
+  }
+
+  @Test
+  public void testOrElse_Success() {
+    Try<Integer> t = new Success<>(1);
+    assertEquals(t, t.orElse(() -> Try.of(() -> 2)));
   }
 
   @Test
