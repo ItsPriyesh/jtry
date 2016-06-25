@@ -16,14 +16,14 @@
 
 package me.priyesh.jtry;
 
-import me.priyesh.jtry.functions.Function0;
+import me.priyesh.jtry.functions.UFunction0;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestUtils {
-  static void assertThrows(RuntimeException expected, Function0 action) {
+  static void assertThrows(RuntimeException expected, UFunction0 function) {
     try {
-      action.apply();
+      function.apply();
       throw new AssertionError("Function completed without throwing expected exception");
     } catch (Throwable t) {
       assertEquals(expected, t);

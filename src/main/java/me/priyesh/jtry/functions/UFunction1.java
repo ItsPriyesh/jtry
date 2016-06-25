@@ -16,6 +16,10 @@
 
 package me.priyesh.jtry.functions;
 
-public interface Function0<R> {
-  R apply() throws Throwable;
+/**
+ * Represents a function that accepts one argument and produces a result
+ * which could potentially throw an exception.
+ */
+public interface UFunction1<T, R> {
+  R apply(T t) throws Throwable;
 }

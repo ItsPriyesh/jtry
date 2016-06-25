@@ -17,6 +17,7 @@
 package me.priyesh.jtry;
 
 import me.priyesh.jtry.functions.Function1;
+import me.priyesh.jtry.functions.UFunction1;
 import me.priyesh.jtry.functions.Supplier;
 
 public final class Failure<A> extends Try<A> {
@@ -50,11 +51,13 @@ public final class Failure<A> extends Try<A> {
         : new RuntimeException(throwable);
   }
 
-  public final <B> Try<B> flatMap(Function1<A, Try<B>> f) {
+  public final <B> Try<B> flatMap(UFunction1<A, Try<B>> f) {
     return new Failure<>(throwable);
   }
 
   public final <B> Try<B> map(Function1<A, B> f) {
     return new Failure<>(throwable);
   }
+
+  public <B> void foreach(Function1<A, B> f) {}
 }

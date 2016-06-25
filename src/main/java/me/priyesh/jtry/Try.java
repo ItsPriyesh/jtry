@@ -16,9 +16,10 @@
 
 package me.priyesh.jtry;
 
-import me.priyesh.jtry.functions.Function0;
 import me.priyesh.jtry.functions.Function1;
 import me.priyesh.jtry.functions.Supplier;
+import me.priyesh.jtry.functions.UFunction0;
+import me.priyesh.jtry.functions.UFunction1;
 
 public abstract class Try<A> {
 
@@ -36,20 +37,24 @@ public abstract class Try<A> {
   public abstract A getOrElse(Supplier<A> defaultValue);
 
   /**
-   * Returns this Try if it's a Success or the given default value if this is a `Failure`.
+   * Returns this Try if it's a Success or the given default value if this is a Failure.
    */
-  //def orElse[U >: T](default: => Try[U]): Try[U]
   public abstract Try<A> orElse(Supplier<Try<A>> defaultValue);
 
   /**
    * Returns the given function applied to the value from this Success or returns this if this is a Failure.
    */
-  public abstract <B> Try<B> flatMap(Function1<A, Try<B>> f);
+  public abstract <B> Try<B> flatMap(UFunction1<A, Try<B>> f);
 
   /**
    * Maps the given function to the value from this Success or returns this if this is a Failure.
    */
   public abstract <B> Try<B> map(Function1<A, B> f);
+
+  /**
+   * Applies the given function if this is a Success, or returns immediately if this is a Failure.
+   */
+  public abstract <B> void foreach(Function1<A, B> f);
 
   /**
    * Returns true if the Try is a Failure, false otherwise.
@@ -67,7 +72,7 @@ public abstract class Try<A> {
     this.value = a;
   }
 
-  public static <A> Try<A> of(Function0<A> f) {
+  public static <A> Try<A> of(UFunction0<A> f) {
     try {
       return new Success<>(f.apply());
     } catch (Throwable throwable) {

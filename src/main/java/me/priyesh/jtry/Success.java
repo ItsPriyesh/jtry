@@ -18,6 +18,7 @@ package me.priyesh.jtry;
 
 import me.priyesh.jtry.functions.Function1;
 import me.priyesh.jtry.functions.Supplier;
+import me.priyesh.jtry.functions.UFunction1;
 
 public final class Success<A> extends Try<A> {
 
@@ -45,7 +46,7 @@ public final class Success<A> extends Try<A> {
     return value;
   }
 
-  public final <B> Try<B> flatMap(Function1<A, Try<B>> f) {
+  public final <B> Try<B> flatMap(UFunction1<A, Try<B>> f) {
     try {
       return f.apply(get());
     } catch (Throwable throwable) {
@@ -55,5 +56,9 @@ public final class Success<A> extends Try<A> {
 
   public final <B> Try<B> map(Function1<A, B> f) {
     return Try.of(() -> f.apply(get()));
+  }
+
+  public <B> void foreach(Function1<A, B> f) {
+    f.apply(value);
   }
 }
