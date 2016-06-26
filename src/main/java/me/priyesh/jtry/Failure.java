@@ -60,4 +60,12 @@ public final class Failure<A> extends Try<A> {
   }
 
   public <B> void foreach(Function1<A, B> f) {}
+
+  public Try<A> recover(UFunction1<Throwable, A> f) {
+    try {
+      return new Success<>(f.apply(throwable));
+    } catch (Throwable throwable) {
+      return new Failure<>(throwable);
+    }
+  }
 }

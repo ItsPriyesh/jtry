@@ -172,6 +172,20 @@ public class TryTest {
   }
 
   @Test
+  public void testRecover_Failure() {
+    Try<Integer> t = new Failure<>(new Exception());
+    Try<Integer> recovered = t.recover(throwable -> 1);
+    assertEquals(new Integer(1), recovered.get());
+  }
+
+  @Test
+  public void testRecover_Success() {
+    Try<Integer> t = new Success<>(1);
+    Try<Integer> recovered = t.recover(throwable -> 2);
+    assertEquals(t, recovered);
+  }
+
+  @Test
   public void testMatch_Failure() {
     RuntimeException ex = new RuntimeException();
     new Failure<Integer>(ex).match(i -> fail(), e -> assertEquals(ex, e));

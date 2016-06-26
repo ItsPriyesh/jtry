@@ -61,4 +61,8 @@ public final class Success<A> extends Try<A> {
   public <B> void foreach(Function1<A, B> f) {
     f.apply(value);
   }
+
+  public Try<A> recover(UFunction1<Throwable, A> f) {
+    return this;
+  }
 }

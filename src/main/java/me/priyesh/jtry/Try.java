@@ -25,7 +25,7 @@ public abstract class Try<A> {
 
   /**
    * Returns the value from this Try if it's a Success, or throws the exception if it's a Failure.
-   *
+   * <p>
    * Note that if the Failure encapsulates a checked exception, it will be given wrapped in a RuntimeException.
    * This allows unchecked calls to get().
    */
@@ -57,6 +57,12 @@ public abstract class Try<A> {
   public abstract <B> void foreach(Function1<A, B> f);
 
   /**
+   * Applies the given function if this is a Failure, otherwise returns this if this is a Success.
+   * This is like map for the exception.
+   */
+  public abstract Try<A> recover(UFunction1<Throwable, A> f);
+
+  /**
    * Returns true if the Try is a Failure, false otherwise.
    */
   public abstract boolean isFailure();
@@ -84,7 +90,9 @@ public abstract class Try<A> {
     if (this instanceof Success) {
       onSuccess.call(get());
     } else if (this instanceof Failure) {
-      try { get(); } catch (Exception e) {
+      try {
+        get();
+      } catch (Exception e) {
         onFailure.call((RuntimeException) e);
       }
     }
