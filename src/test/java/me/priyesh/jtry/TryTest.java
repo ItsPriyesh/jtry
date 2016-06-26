@@ -156,6 +156,22 @@ public class TryTest {
   }
 
   @Test
+  public void testForeach_Failure() {
+    final int[] a = {0};
+    Try<Integer> t = new Failure<>(new Exception());
+    t.foreach(i -> a[0] += 1);
+    assertEquals(0, a[0]);
+  }
+
+  @Test
+  public void testForeach_Success() {
+    final int[] a = {0};
+    Try<Integer> t = new Success<>(1);
+    t.foreach(i -> a[0] += i);
+    assertEquals(1, a[0]);
+  }
+
+  @Test
   public void testMatch_Failure() {
     RuntimeException ex = new RuntimeException();
     new Failure<Integer>(ex).match(i -> fail(), e -> assertEquals(ex, e));

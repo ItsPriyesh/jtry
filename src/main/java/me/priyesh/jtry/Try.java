@@ -66,7 +66,7 @@ public abstract class Try<A> {
    */
   public abstract boolean isSuccess();
 
-  protected final A value;
+  protected A value;
 
   Try(A a) {
     this.value = a;
