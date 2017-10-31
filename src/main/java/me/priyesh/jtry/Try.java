@@ -32,7 +32,7 @@ public abstract class Try<A> {
   public abstract <E extends RuntimeException> A get() throws E;
 
   /**
-   * Returns this Try if it's a Success or the given default value if it's a Failure.
+   * Returns the value from this Try if it's a Success or the given default value if it's a Failure.
    */
   public abstract A getOrElse(Supplier<A> defaultValue);
 
